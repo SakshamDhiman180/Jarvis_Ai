@@ -1,5 +1,4 @@
 import speech_recognition as sr
-from googlesearch import search
 from gtts import gTTS
 import os
 import openai
@@ -7,7 +6,7 @@ import openai
 recognizer = sr.Recognizer()
 
 while True:
-    print("Active...")
+    print("Listening...")
     with sr.Microphone() as source:
         audio = recognizer.listen(source)
 
@@ -19,10 +18,8 @@ while True:
             break
         
         response = None
-        if "JARViS" in user_input.lower():
-            print("Listening...")
+        if "search" in user_input.lower():
             term = user_input.lower().replace("search", "")
-            #search_results = list(search(term, num_results=1, lang="en",timeout=5))
             openai.api_key = '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'
             prompt = "User: " + term  + "\nAssistant:"
             completion = openai.Completion.create(
