@@ -2,12 +2,12 @@ import speech_recognition as sr
 from googlesearch import search
 from gtts import gTTS
 import os
-
+import openai
 
 recognizer = sr.Recognizer()
 
 while True:
-    print("Listening...")
+    print("Active...")
     with sr.Microphone() as source:
         audio = recognizer.listen(source)
 
@@ -19,15 +19,25 @@ while True:
             break
         
         response = None
-        if "search" in user_input.lower():
+        if "JARViS" in user_input.lower():
+            print("Listening...")
             term = user_input.lower().replace("search", "")
-            search_results = list(search(term, num_results=1, lang="en",timeout=5))
-            if search_results:
-                response = f"I found this result for '{term}': {search_results[0]}"
+            #search_results = list(search(term, num_results=1, lang="en",timeout=5))
+            openai.api_key = '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'
+            prompt = "User: " + term  + "\nAssistant:"
+            completion = openai.Completion.create(
+                engine="text-davinci-003",  
+                prompt=prompt,
+                max_tokens=50 
+                )
+            response = completion.choices[0].text.strip()
+
+            if response:
+                response = f"I found this result for '{term}': {response}"
             else:
                 response = f"I'm sorry, I couldn't find any results for '{term}'"
         elif "what is your name" in user_input.lower():
-             response = f"Hi my name is JARViS ai asistant. Developed by SAksham Dhiman"
+             response = f"Hi my name is JARViS ai asistant. Developed by Ssksham Dhiman"
         else:
             response = "I'm sorry, I'm not sure what you're asking Saksham."
         
