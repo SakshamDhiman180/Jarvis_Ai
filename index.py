@@ -36,7 +36,7 @@ while True:
                 response = completion.choices[0].text.strip()
 
                 if response:
-                    response = f"I found this result: {response}"
+                    response = f"{response}"
                 else:
                     response = f"I'm sorry, I couldn't find any results for '{term}'"
             except sr.UnknownValueError:
